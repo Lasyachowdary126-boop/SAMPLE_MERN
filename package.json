@@ -1,0 +1,24 @@
+{
+  "name": "sample_mern",
+  "version": "1.0.0",
+  "description": "project",
+  "homepage": "https://github.com/Lasyachowdary126-boop/SAMPLE_MERN#readme",
+  "bugs": {
+    "url": "https://github.com/Lasyachowdary126-boop/SAMPLE_MERN/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lasyachowdary126-boop/SAMPLE_MERN.git"
+  },
+  "license": "ISC",
+  "author": "lasya",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongodb": "^7.6.0"
+  }
+}
