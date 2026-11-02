@@ -1,32 +1,36 @@
-
-
-let express=require("express");
+let express=require('express');
 let router=express.Router();
 let bcrypt=require('bcrypt');
-let {users} =require('../models/users')
+let {users}=require('../models/users');
 
-router.post("/register",(req,res)=>{
+//localhost:3000/api/emp/register
+router.post("/register",async (req,res)=>{
     console.log(req.body);
+    req.body.password=await bcrypt.hash(req.body.password,10);
     let newuser=users(req.body);
-    let result=newuser.save();
+    let result= await newuser.save();
     res.send(result);
-    // res.send("register route");
+})
 
-});
-router.post("/login",(req,res)=>{
-    res.send("login route");
-
-});
-router.get("/viewtasks",(req,res)=>{
-    res.send("view tasks route");
-
-});
-router.put("/updateStatus",(req,res)=>{
-    res.send("update status  route");
-
-});
-
-module.exports=router;
+router.post("/login",async (req,res)=>{
+    let result=await users.findOne({email:req.body.email})
+    if(result){
+let matchpass=await bcrypt.compare(req.body.password,result.password);
+    if(matchpass){
+        res.send({"msg":"Login Success",
+            "user":{
+                _id:result._id,
+                name:result.name,
+                email:result.email,
+                role:result.role
+            }});
+    }else{
+        res.send({"msg":"Login Failed"});
+    }
+    }else{
+        res.send({"msg":"User not found"});
+    }
+})
 
 
 

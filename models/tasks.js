@@ -1,32 +1,37 @@
-import { ObjectId, Timestamp } from 'mongodb';
-
+const { Timestamp } = require('mongodb');
 let mongoose=require('mongoose');
-let taskScheme=mongoose.Schema({
-    taskname:{
-        type:String,required:true
+let taskSchema = mongoose.Schema({
+    taskdesc: {
+        type: String,
+        required: true
+    },
 
+    assignedTo: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users',
+        required: true
     },
-    taskdesc:{
-        type:String,required:true
+
+    assignedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users',
+        required: true
     },
-    assignedTo:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'users',required:true
+
+    duedate: {
+        type: Date,
+        required: true
     },
-    assignedBy:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'users',required:true
-    },
-    dueDate:{
-        type:Date,require:true
-    },
-    status:{
-        type:String, enum:["pending","in-progress","completed"],
-        default:"pending"
+
+    status: {
+        type: String,
+        enum: ["pending", "in-progress", "completed"],
+        default: "pending"
     }
-},{
-    Timestamps:true
+}, {
+    timestamps: true
 });
 
-const tasks=mongoose.model('tasks',taskSchema);
+
+let tasks=mongoose.model('tasks',taskSchema);
 module.exports={tasks}
